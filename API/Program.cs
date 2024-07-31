@@ -27,7 +27,7 @@ public class Program
                 logger.LogError(ex, "An error occurred while migrating or seeding the database.");
             }
         }
-         host.Run();
+            host.Run();
     }
 
     public static IHostBuilder CreateHostBuilder(string[] args) =>

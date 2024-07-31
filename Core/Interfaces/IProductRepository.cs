@@ -1,18 +1,18 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Core.Entities;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using Core.Entities;
 
-namespace Core.Interfaces
-{
-    public interface IProductRepository
+    namespace Core.Interfaces
     {
-        Task<Product>GetProductByIdAsync(int id);
-        Task<IReadOnlyList<Product>> GetProductsAsync();
-         // Task<IReadOnlyList<Product>> GetReadOnlyListAsync(); 
-        Task<IReadOnlyList<ProductBrand>> GetProductBrandsAsync();
-        Task<IReadOnlyList<ProductType>> GetProductTypesAsync();
+        public interface IProductRepository
+        {
+            Task<Product>GetProductByIdAsync(int id);
+            Task<IReadOnlyList<Product>> GetProductsAsync();
+            // Task<IReadOnlyList<Product>> GetReadOnlyListAsync(); 
+            Task<IReadOnlyList<ProductBrand>> GetProductBrandsAsync();
+            Task<IReadOnlyList<ProductType>> GetProductTypesAsync();
 
+        }
     }
-}
