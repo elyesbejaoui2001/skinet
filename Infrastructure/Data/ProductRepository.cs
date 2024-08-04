@@ -10,6 +10,10 @@ namespace Infrastructure.Data
     {
         private readonly StoreContext _context;
 
+        public ProductRepository(){
+            
+        }
+
         public ProductRepository(StoreContext context)
         {
             _context = context;

@@ -1,10 +1,8 @@
+using API.Extensions;
 using API.Helpers;
-using Core.Interfaces;
+using API.Middleware;
 using Infrastructure.Data;
-using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 
 public class Startup
 {
@@ -17,26 +15,29 @@ public class Startup
 
     public IConfiguration Configuration { get; }
 
-    public void ConfigureServices(IServiceCollection services)
+   public void ConfigureServices(IServiceCollection services)
     {
-        services.AddScoped<IProductRepository, ProductRepository>();
-        services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+        
         services.AddAutoMapper(typeof(MappingProfiles));
         services.AddControllers();
         services.AddDbContext<StoreContext>(x => 
             x.UseSqlite(_config.GetConnectionString("DefaultConnection")));
+
+            services.AddApplicationServices();
+            services.AddSwaggerDocumentation();
+
+            
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
     {
-        if (env.IsDevelopment())
-        {
-            app.UseDeveloperExceptionPage();
-        }
+        app.UseMiddleware<ExceptionMiddleWare>();
+        app.UseStatusCodePagesWithRedirects("/errors/{0}");
 
 
         app.UseRouting();
         app.UseStaticFiles();
+        app.UseSwaggerDocumentation();
         
         app.UseAuthorization();
 
