@@ -10,7 +10,7 @@
         {
             Task<Product>GetProductByIdAsync(int id);
             Task<IReadOnlyList<Product>> GetProductsAsync();
-            // Task<IReadOnlyList<Product>> GetReadOnlyListAsync(); 
+             Task<IReadOnlyList<Product>> GetReadOnlyListAsync(); 
             Task<IReadOnlyList<ProductBrand>> GetProductBrandsAsync();
             Task<IReadOnlyList<ProductType>> GetProductTypesAsync();
 

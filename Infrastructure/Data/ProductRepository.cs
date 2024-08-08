@@ -51,5 +51,6 @@ namespace Infrastructure.Data
         {
             return await _context.Products.ToListAsync();
         }
+        
     }
 }

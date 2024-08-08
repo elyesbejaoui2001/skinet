@@ -30,14 +30,17 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IReadOnlyList<ProductToReturnDto>>> GetProducts()
+        public async Task<ActionResult<IReadOnlyList<ProductToReturnDto>>> GetProducts([FromQuery] string sort = null,  [FromQuery] int? brandId = null, [FromQuery] int? typeId = null)
         {
-            var spec = new ProductsWithTypesAndBrandsSpecification();
+            // Journalisez les valeurs des paramètres
+    Console.WriteLine($"Sort: {sort}, BrandId: {brandId}, TypeId: {typeId}");
+            var spec = new ProductsWithTypesAndBrandsSpecification(sort,  brandId, typeId);
             var products = await _productsRepo.ListAsync(spec);
-            
+
             return Ok(_mapper
             .Map<IReadOnlyList<Product>, IReadOnlyList<ProductToReturnDto>>(products));
         }
+
 
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
