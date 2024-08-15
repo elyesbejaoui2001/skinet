@@ -25,6 +25,16 @@ public class Startup
 
             services.AddApplicationServices();
             services.AddSwaggerDocumentation();
+           services.AddCors(options =>
+{
+    options.AddPolicy("AllowAngularApp",
+        builder => builder.AllowAnyOrigin()
+                          .AllowAnyMethod()
+                          .AllowAnyHeader());
+});
+
+
+         
 
             
     }
@@ -38,6 +48,8 @@ public class Startup
         app.UseRouting();
         app.UseStaticFiles();
         app.UseSwaggerDocumentation();
+        app.UseCors("AllowAngularApp");
+        
         
         app.UseAuthorization();
 
