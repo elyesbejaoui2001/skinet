@@ -14,13 +14,16 @@ import { ShopParams } from '../shared/models/shopParams';
 })
 export class ShopComponent implements OnInit {
   
-  products: IProduct[] = [];
+  
+  products: IProduct[] = [];  
   brands: IBrand[]= [];
   types: IType[]= [];
-  totalCount: number = 0;
+  page = 1;
   shopParams= new ShopParams();
-  totalPages!: number;
-  currentPage: number = 1;
+  totalItems = 18;
+pageSize = 6;
+currentPage = 0;
+  
   sortOptions = [
     {name: 'Alphabetical', value: 'name'},
     {name: 'Price: Low to High', value: 'priceAsc'},
@@ -30,30 +33,23 @@ export class ShopComponent implements OnInit {
   constructor(private shopService: ShopService) { }
 
   ngOnInit(): void {
-
-   this.getProducts();
+ this.getProducts();
    this.getBrands();
    this.getTypes();
   }
   getProducts()
   {
-    this.shopParams.pageNumber = this.currentPage; 
     this.shopService.getProducts(this.shopParams).subscribe(response => {
+    if(response){
+      this.products = response;
+      console.log("prducts", response)}
+        
+
       
-      if (response && Array.isArray(response)) {
-        this.products = response;  
-      } else if (response && response.data && Array.isArray(response.data)) {
-        this.products = response.data;
-        this.totalCount = response.totalCount; 
-        this.totalPages = Math.ceil(this.totalCount / this.shopParams.pageSize);
-      } else {
-        console.warn('La structure de la réponse API est inattendue.');
-      }
-      
-    },
-    error => {
-      console.error('Erreur:', error);
+    },error =>{
+      console.log(error);
     });
+      
 
   }
   
@@ -90,10 +86,9 @@ export class ShopComponent implements OnInit {
     this.shopParams.sort = sortValue;
     this.getProducts();
   }
-  // onPageChanged(page: number) {
-  //   this.shopParams.pageNumber = page;
-  //   this.getProducts();
-  // }
+
+  
+  /*
   nextPage() {
     if (this.currentPage < this.totalPages) {
       console.log("test");
@@ -115,7 +110,7 @@ export class ShopComponent implements OnInit {
     }
   }
   
-
+*/
   
   
   

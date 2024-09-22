@@ -32,7 +32,7 @@
     <div class="col-9">
       <div class="d-flex justify-content-between align-items-center pb-2">
         <header>
-          <span>Showing <strong>{{shopParams.pageSize}}</strong> of <strong>{{totalCount}}</strong> Results</span>
+          <span>Showing <strong>{{shopParams.pageSize}}</strong> of <strong></strong> Results</span>
         </header>
       </div>
 
@@ -43,18 +43,12 @@
       </div>
 
       <div class="row">
-        <div class="col-4 mb-4" *ngFor="let product of products">
+        <div class="col-4 mb-4" *ngFor="let product of products | paginate: { itemsPerPage: 6, currentPage: page }">
           <app-product-item [product]="product"></app-product-item>
         </div>
       </div> 
 
-      
-     <!-- Contrôles de navigation -->
-     <div class="pagination-controls">
-      <button (onclick)="previousPage()" [disabled]="currentPage === 1">Précédent</button>
-      <span>Page {{ currentPage }} sur {{ totalPages }}</span>
-      <button (onclick)="nextPage()" [disabled]="currentPage === totalPages">Suivant</button>
-    </div>
+      <pagination-controls (pageChange)="page = $event"></pagination-controls>
       
 
     </div>

@@ -10,7 +10,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CoreModule } from './core/core.module';
 import { ShopModule } from './shop/shop.module';
 import { NgxPaginationModule } from 'ngx-pagination';
-
+import { MatPaginatorModule } from '@angular/material/paginator';
 @NgModule({
   declarations: [
     AppComponent,
@@ -23,7 +23,9 @@ import { NgxPaginationModule } from 'ngx-pagination';
     CoreModule,
     ShopModule,  // Assurez-vous que ShopModule est importé ici
     FormsModule,  // Ajout du FormsModule pour la gestion des formulaires et ngModel
-    NgxPaginationModule 
+    NgxPaginationModule,
+    MatPaginatorModule,
+
     
   ],
   providers: [],

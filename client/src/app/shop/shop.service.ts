@@ -5,6 +5,7 @@ import { IBrand } from '../shared/models/brand';
 import { IType } from '../shared/models/productType';
 import { delay, map } from 'rxjs/operators';
 import { ShopParams } from '../shared/models/shopParams';
+import { IProduct } from '../shared/models/product';
 
 
 
@@ -20,7 +21,7 @@ export class ShopService {
     let params = new HttpParams();
     
     // Ajouter des paramètres pour le brandId, typeId, et sort
-    if (shopParams.brandId && shopParams.brandId > 0) {
+    if (shopParams.brandId > 0) {
       params = params.append('brandId', shopParams.brandId.toString());
     }
     if (shopParams.typeId && shopParams.typeId > 0) {
@@ -32,11 +33,13 @@ export class ShopService {
     params = params.append('pageNumber', shopParams.pageNumber.toString());
     params = params.append('pageSize', shopParams.pageSize.toString());
     
-    return this.http.get<IPagination>(this.baseUrl + 'products', { observe: 'response', params })
+    return this.http.get<IProduct[]>(this.baseUrl + 'products', { observe: 'response', params })
       .pipe(
         map(response => {
+          console.log("retur,",response.body)
           return response.body;
         })
+       
       );
   }
   
