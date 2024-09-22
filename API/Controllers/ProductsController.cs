@@ -32,27 +32,39 @@ namespace API.Controllers
         [HttpGet]
         public async Task<ActionResult<IReadOnlyList<ProductToReturnDto>>> GetProducts([FromQuery] string sort = null,  [FromQuery] int? brandId = null, [FromQuery] int? typeId = null)
         {
-            // Journalisez les valeurs des paramètres
-    Console.WriteLine($"Sort: {sort}, BrandId: {brandId}, TypeId: {typeId}");
+            
             var spec = new ProductsWithTypesAndBrandsSpecification(sort,  brandId, typeId);
             var products = await _productsRepo.ListAsync(spec);
 
-            return Ok(_mapper
-            .Map<IReadOnlyList<Product>, IReadOnlyList<ProductToReturnDto>>(products));
+           return Ok(_mapper
+    .Map<IReadOnlyList<Product>, IReadOnlyList<ProductToReturnDto>>(products));
+
         }
+// [HttpGet("{id}")]
+// public async Task<ActionResult<ProductToReturnDto>> GetProduct(int id)
+// {
+//     var product = await _productsRepo.GetByIdAsync(id);
+
+//     if (product == null)
+//         return NotFound();
+
+//     return Ok(product);
+// }
 
 
-        [HttpGet("{id}")]
+      [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse) ,StatusCodes.Status404NotFound )]
         public async Task<ActionResult<ProductToReturnDto>> GetProduct(int id)
         {
             var spec = new ProductsWithTypesAndBrandsSpecification(id);
-            var product =  await _productsRepo.GetEntityWithSpec(spec);
+            var product = await _productsRepo.GetEntityWithSpec(spec);
+Console.WriteLine($"Product ID: {product?.Id}");
+
             if (product == null) return NotFound(new ApiResponse(404));
             return _mapper.Map<Product, ProductToReturnDto>(product);
            
-        }
+        } 
 
         [HttpGet("brands")]
         public async Task<ActionResult<IReadOnlyList<ProductBrand>>> GetProductBrands()
@@ -66,5 +78,8 @@ namespace API.Controllers
             return Ok(await _productTypeRepo.ListAllAsync());
 
         }
+       
+
     }
+    
 }

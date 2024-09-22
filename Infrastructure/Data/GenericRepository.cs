@@ -29,6 +29,10 @@ namespace Infrastructure.Data
         }
            public async Task<T> GetEntityWithSpec(ISpecification<T> spec)
         {
+                var query = ApplySpecification(spec);
+            Console.WriteLine(query.ToQueryString());
+
+
             return await ApplySpecification(spec).FirstOrDefaultAsync();
         }
 

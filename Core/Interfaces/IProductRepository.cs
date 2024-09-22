@@ -13,6 +13,7 @@
              Task<IReadOnlyList<Product>> GetReadOnlyListAsync(); 
             Task<IReadOnlyList<ProductBrand>> GetProductBrandsAsync();
             Task<IReadOnlyList<ProductType>> GetProductTypesAsync();
+            
 
         }
     }
